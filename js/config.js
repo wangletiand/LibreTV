@@ -22,13 +22,108 @@ const SITE_CONFIG = {
 
 // API站点配置
 const API_SITES = {
-    testSource: {
-        api: 'https://www.example.com/api.php/provide/vod',
-        name: '空内容测试源',
+    qiqi: {
+        api: 'https://example.com/api.php/provide/vod/from/qq/',
+        name: '七七资源',
+        adult: false
+    },
+    ffzy: {
+        api: 'https://m3u8.apiyhzy.com/api.php/provide/vod/',
+        name: '非凡影视',
+        adult: false
+    },
+    heimuer: {
+        api: 'https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/',
+        name: '黑木耳资源',
+        adult: false
+    },
+    tianya: {
+        api: 'https://www.tyapi.com/api.php/provide/vod/',
+        name: '天涯资源',
+        adult: false
+    },
+    so360: {
+        api: 'https://360zyapi.com/api.php/provide/vod/',
+        name: '360资源',
+        adult: false
+    },
+    wolong: {
+        api: 'https://www.wolongzy.com/api.php/provide/vod/',
+        name: '卧龙资源',
+        adult: false
+    },
+    huawei: {
+        api: 'https://huaweiapi.com/api.php/provide/vod/',
+        name: '华为吧资源',
+        adult: false
+    },
+    jisuz: {
+        api: 'https://jisuzy.com/api.php/provide/vod/',
+        name: '极速资源',
+        adult: false
+    },
+    douban: {
+        api: 'https://doubanzy.com/api.php/provide/vod/',
+        name: '豆瓣资源',
+        adult: false
+    },
+    baofeng: {
+        api: 'https://baofengzy.com/api.php/provide/vod/',
+        name: '暴风资源',
+        adult: false
+    },
+    mozha: {
+        api: 'https://mozhazy.com/api.php/provide/vod/',
+        name: '魔爪资源',
+        adult: false
+    },
+    modu: {
+        api: 'https://moduzy.com/api.php/provide/vod/',
+        name: '魔都资源',
+        adult: false
+    },
+    ruyi: {
+        api: 'https://ruyizy.com/api.php/provide/vod/',
+        name: '如意资源',
+        adult: false
+    },
+    maxzy: {
+        api: 'https://maxzy.com/api.php/provide/vod/',
+        name: '最大资源',
+        adult: false
+    },
+    sakura: {
+        api: 'https://sakurazy.com/api.php/provide/vod/',
+        name: '樱花资源',
+        adult: false
+    },
+    baiduyun: {
+        api: 'https://baiduyunzy.com/api.php/provide/vod/',
+        name: '百度云资源',
+        adult: false
+    },
+    wujin: {
+        api: 'https://api.wujinapi.me/api.php/provide/vod/from/wjm3u8/',
+        name: '无尽资源',
+        adult: false
+    },
+    xhzy: {
+        api: 'https://xhzyapi.com/api.php/provide/vod/',
+        name: '小黄资源',
         adult: true
+    },
+    cnsx: {
+        api: 'https://cnsxzy.com/api.php/provide/vod/',
+        name: '成人精选',
+        adult: true
+    },
+    yule: {
+        api: 'https://yulezy.com/api.php/provide/vod/',
+        name: '娱乐资源',
+        adult: false
     }
-    //ARCHIVE https://telegra.ph/APIs-08-12
 };
+
 
 // 定义合并方法
 function extendAPISites(newSites) {
