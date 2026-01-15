@@ -1,6 +1,4 @@
 {
-  "trailingSlash": false,
-  "cleanUrls": false,
   "rewrites": [
     {
       "source": "/:path*",
@@ -11,24 +9,11 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Set-Cookie" },
-        { "key": "Set-Cookie", "value": "path=/; SameSite=Lax; Secure" }
+        { "key": "Cache-Control", "value": "no-cache" }
       ]
     }
   ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "disableBuild": true // 强制禁用构建，直接部署根目录文件
-  },
-  "static": {
-    "rewriteMissingPaths": false,
-    "cacheControl": "no-store"
-  }
+  "cleanUrls": false,
+  "trailingSlash": false
 }
