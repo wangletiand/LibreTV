@@ -1,21 +1,49 @@
 {
+  "headers": [
+    // 解决跨域报错（前端调用/proxy接口时的跨域问题）
+    {
+      "source": "/api/proxy/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" }
+      ]
+    },
+    // 解决静态页面/资源的缓存/跨域问题
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
+        { "key": "Access-Control-Allow-Origin", "*" }
+      ]
+    }
+  ],
   "rewrites": [
+    // 1. 代理接口规则（优先匹配，解决/proxy路径404/代理失效）
     {
       "source": "/proxy/:path*",
       "destination": "/api/proxy/:path*"
     },
+    // 2. 搜索路径跳转（解决/s=xxx跳转404）
     {
-      "source": "/s=:query",
+      "source": "/s=:query*", // 兼容多参数场景（如/s=xxx&page=1）
       "destination": "/index.html"
+    },
+    // 3. 播放器页面（兼容带/不带尾部斜杠、多层级路径）
+    {
+      "source": "/player.html/:path*",
+      "destination": "/player.html"
     },
     {
       "source": "/player.html",
       "destination": "/player.html"
     },
+    // 4. 根路径匹配（解决访问/直接404）
     {
-      "source": "/player.html/:path*",
-      "destination": "/player.html"
+      "source": "/",
+      "destination": "/index.html"
     },
+    // 5. 兜底静态资源（解决其他静态文件如css/js/img 404）
     {
       "source": "/:path*",
       "destination": "/:path*"
