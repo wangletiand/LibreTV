@@ -1,56 +1,34 @@
 {
-  "runtime": "edge", // 对齐 Cloudflare Worker 运行时（Vercel 默认nodejs，和CF环境差异大）
-  "trailingSlash": false, // 禁用尾部斜杠（CF默认无，Vercel默认自动加，导致路径不匹配）
-  "cleanUrls": false, // 关闭URL自动去后缀（避免Vercel篡改player.html为player）
+  "trailingSlash": false,
+  "cleanUrls": false,
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/:path*"
+    }
+  ],
   "headers": [
-    // 1. 修复Vercel下Cookie/LocalStorage作用域（CF默认宽松，Vercel需显式配置）
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Set-Cookie", "value": "path=/; SameSite=None; Secure" },
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }, // 禁用Vercel缓存（避免JS/CSS缓存导致逻辑异常）
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
         { "key": "Pragma", "value": "no-cache" },
         { "key": "Expires", "value": "0" },
-        // 对齐CF的跨域/资源头规则
         { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization,Set-Cookie" }
-      ]
-    },
-    // 2. 修复API代理的Vercel Edge运行时适配
-    {
-      "source": "/api/proxy/:path*",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "*" },
-        { "key": "X-Vercel-Cache", "value": "0" }, // 强制禁用API缓存
-        { "key": "Edge-Runtime", "value": "edge" }
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Set-Cookie" },
+        { "key": "Set-Cookie", "value": "path=/; SameSite=Lax; Secure" }
       ]
     }
   ],
-  "rewrites": [
-    // 3. 适配Vercel的路由匹配优先级（CF是模糊匹配，Vercel是精确匹配）
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/index.html/:path*", "destination": "/index.html" },
-    { "source": "/player.html/:path*", "destination": "/player.html" },
-    { "source": "/s=:query*", "destination": "/index.html" },
-    { "source": "/proxy/:path*", "destination": "/api/proxy/:path*" },
-    // 兜底规则：强制Vercel按CF逻辑匹配静态资源（避免404）
-    {
-      "source": "/:path+",
-      "destination": "/:path+"
-    }
-  ],
-  // 4. 禁用Vercel的自动构建优化（避免篡改前端资源路径）
   "build": {
     "env": {
       "NODE_ENV": "production"
     },
-    "disableBuildCache": true,
-    "override": true
+    "disableBuild": true // 强制禁用构建，直接部署根目录文件
   },
-  // 5. 静态资源处理：对齐CF的资源加载规则
   "static": {
-    "cacheControl": "no-cache",
-    "rewriteMissingPaths": false // 禁用Vercel自动补全路径（CF无此特性）
+    "rewriteMissingPaths": false,
+    "cacheControl": "no-store"
   }
 }
