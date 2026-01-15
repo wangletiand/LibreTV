@@ -30,6 +30,11 @@ const API_SITES = {
         detail: 'http://caiji.dyttzyapi.com',
         adult: false
     },
+    modu: {
+        api: 'https://moduzy.com/api.php/provide/vod/',
+        name: '魔都资源',
+        adult: false
+    },
     ruyi: {
         api: 'https://cj.rycjapi.com/api.php/provide/vod',
         name: '如意资源',
